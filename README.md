@@ -15,6 +15,10 @@
 
 ## CLI:
 ### topic:
+list:
+```shell script
+kafka-topics.sh --bootstrap-server localhost:9092 --list
+```
 create:
 ```shell script
 kafka-topics.sh --bootstrap-server localhost:9092 --topic second-topic --create --partitions 3 --replication-factor 1
