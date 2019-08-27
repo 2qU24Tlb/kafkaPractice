@@ -1,9 +1,10 @@
-package kafka.practice1.base
+package kafka.practice1.assign
 
 import java.time.Duration
 import java.util.Properties
 
-import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
+import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecords, KafkaConsumer}
+import org.apache.kafka.common.TopicPartition
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -24,10 +25,12 @@ object Consumer {
 
     // create consumer
     val consumer = new KafkaConsumer[String, String](property)
-    val topic = "second"
+    val topic = "first"
 
-    // subscribe consumer to topic
-    consumer.subscribe(List(topic).asJava)
+    // assign topic
+    val partitionToReadFrom = new TopicPartition(topic, 0)
+    val offsetToReadFrom = 15L
+    consumer.assign(List(partitionToReadFrom).asJava)
 
     while (true) {
       val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(100))
